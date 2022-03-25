@@ -1,24 +1,82 @@
 import logo from './logo.svg';
 import './App.css';
+import React, { useEffect, useState } from 'react';
+import Loading from './components/Loading';
+import axios from 'axios';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+  // const apiQuotes = {};
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [apiQuotes, setApiQuotes] = useState([]);
+  const [quote, setQuote] = useState("");
+
+
+  const getQuotes = async () => {
+      setIsLoading(true);
+      const apiURL = "https://type.fit/api/quotes";
+    
+      const response = await axios.get(apiURL);
+      setApiQuotes(response.data);
+          
+      setIsLoading(false);
+  }
+
+useEffect( () => {
+  getQuotes();
+  // newQuote();
+}, []);
+
+function newQuote() {
+    setIsLoading(true);
+    //  Pick a random quote from apiQuotes array
+    // const quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)];
+    setQuote(apiQuotes[Math.floor(Math.random() * apiQuotes.length)]);
+    // console.log(quote);
+    
+    // Check if author feild is null, if it is replace it with "Unknown"
+    // if(!author) {
+    //     authorText.textContent = "Unknown";
+    // } else {
+    //     authorText.textContent = quote.author;
+    // }
+    // // Check quote length to determin styling
+    // if (quote.text.length > 120) {
+    //     quoteText.classList.add("long-quote");
+    // }   else {
+    //     quoteText.classList.remove("long-quote");
+    // }
+    // Set quote and hide the loader
+    // quoteText.textContent = quote.text;
+    setIsLoading(false);
+    
+}
+
+  return (<>
+      <div className="quote-container" id="quote-container">
+        {/* <!-- Quote --> */}
+        <div className="quote-text">
+            <i className="fas fa-quote-left"></i>
+            <span id="quote">{quote.text}</span>
+        </div>
+        {/* <!-- Author --> */}
+        <div className="quote-author">
+            <span id="author">{quote.author}</span>
+        </div>
+        {/* <!-- Buttons --> */}
+        <div className="button-container">
+            <button className="twitter-button" id="twitter" title="Tweet This!">
+                <i className="fab fa-twitter"></i>
+            </button>
+            <button id="new-quote" onClick={newQuote}>New Quote</button>
+        </div>
     </div>
+    {/* <!-- Loader --> */}
+    {/* <div className="loader" id="loader"></div> */}
+    {isLoading && <Loading />}
+    </>
+
   );
 }
 
