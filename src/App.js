@@ -41,6 +41,12 @@ function newQuote() {
     
 }
 
+function tweetQuote() {
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${quote.text} - ${quote.author}`;
+
+    window.open(twitterUrl, "_blank");
+}
+
   return (<>
       {isLoading && <Loading />}
       <div className="quote-container" id="quote-container">
@@ -55,7 +61,7 @@ function newQuote() {
         </div>
         {/* <!-- Buttons --> */}
         <div className="button-container">
-            <button className="twitter-button" id="twitter" title="Tweet This!">
+            <button className="twitter-button" id="twitter" title="Tweet This!" onClick={tweetQuote}>
                 <i className="fab fa-twitter"></i>
             </button>
             <button id="new-quote" onClick={newQuote}>New Quote</button>
