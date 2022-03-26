@@ -19,7 +19,6 @@ function App() {
     
       const response = await axios.get(apiURL);
       setApiQuotes(response.data);
-          
       setIsLoading(false);
   }
 
@@ -31,34 +30,22 @@ useEffect( () => {
 function newQuote() {
     setIsLoading(true);
     //  Pick a random quote from apiQuotes array
-    // const quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)];
     setQuote(apiQuotes[Math.floor(Math.random() * apiQuotes.length)]);
-    // console.log(quote);
     
     //Check if author feild is null, if it is replace it with "Unknown"
     if(!quote.author) {
         quote.author = "Unknown";
     }
-    //  else {
-    //     // authorText.textContent = quote.author;
-
-    // }
-    // // Check quote length to determin styling
-    // if (quote.text.length > 120) {
-    //     quoteText.classList.add("long-quote");
-    // }   else {
-    //     quoteText.classList.remove("long-quote");
-    // }
-    // Set quote and hide the loader
-    // quoteText.textContent = quote.text;
+    
     setIsLoading(false);
     
 }
 
   return (<>
+      {isLoading && <Loading />}
       <div className="quote-container" id="quote-container">
         {/* <!-- Quote --> */}
-        <div className={`"quote-text" ${(quote.text.length > 120) && 'long-quote'}`}>
+        <div className={`${quote.text.length > 120 ? 'long-quote' : 'quote-text'}`}>
             <i className="fas fa-quote-left"></i>
             <span id="quote">{quote.text}</span>
         </div>
@@ -76,7 +63,7 @@ function newQuote() {
     </div>
     {/* <!-- Loader --> */}
     {/* <div className="loader" id="loader"></div> */}
-    {isLoading && <Loading />}
+    
     </>
 
   );
