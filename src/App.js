@@ -10,7 +10,7 @@ function App() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [apiQuotes, setApiQuotes] = useState([]);
-  const [quote, setQuote] = useState("");
+  const [quote, setQuote] = useState({text: "Everything is nothing, with a twist.", author: "Kurt Vonnegut"});
 
 
   const getQuotes = async () => {
@@ -35,11 +35,13 @@ function newQuote() {
     setQuote(apiQuotes[Math.floor(Math.random() * apiQuotes.length)]);
     // console.log(quote);
     
-    // Check if author feild is null, if it is replace it with "Unknown"
-    // if(!author) {
-    //     authorText.textContent = "Unknown";
-    // } else {
-    //     authorText.textContent = quote.author;
+    //Check if author feild is null, if it is replace it with "Unknown"
+    if(!quote.author) {
+        quote.author = "Unknown";
+    }
+    //  else {
+    //     // authorText.textContent = quote.author;
+
     // }
     // // Check quote length to determin styling
     // if (quote.text.length > 120) {
@@ -56,7 +58,7 @@ function newQuote() {
   return (<>
       <div className="quote-container" id="quote-container">
         {/* <!-- Quote --> */}
-        <div className="quote-text">
+        <div className={`"quote-text" ${(quote.text.length > 120) && 'long-quote'}`}>
             <i className="fas fa-quote-left"></i>
             <span id="quote">{quote.text}</span>
         </div>
