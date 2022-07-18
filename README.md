@@ -1,1 +1,1 @@
-Link to the app: https://chetonix-quote-generator.netlify.app
+Link to the app: https://chetonix.github.io/quote-generator-react/
