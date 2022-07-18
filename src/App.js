@@ -8,24 +8,25 @@ function App() {
 
   // const apiQuotes = {};
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [apiQuotes, setApiQuotes] = useState([]);
   const [quote, setQuote] = useState({text: "Everything is nothing, with a twist.", author: "Kurt Vonnegut"});
 
-
-  const getQuotes = async () => {
-      setIsLoading(true);
+    const getQuotes = async () => {
+      //setIsLoading(true);
       const apiURL = "https://type.fit/api/quotes";
     
       const response = await axios.get(apiURL);
       setApiQuotes(response.data);
+    
       setIsLoading(false);
+      
   }
 
 useEffect( () => {
   getQuotes();
-  // newQuote();
 }, []);
+  
 
 function newQuote() {
     setIsLoading(true);
@@ -48,7 +49,7 @@ function tweetQuote() {
 }
 
   return (<>
-      {isLoading && <Loading />}
+      {isLoading ? <Loading /> : (
       <div className="quote-container" id="quote-container">
         {/* <!-- Quote --> */}
         <div className={`${quote.text.length > 120 ? 'long-quote' : 'quote-text'}`}>
@@ -66,7 +67,7 @@ function tweetQuote() {
             </button>
             <button id="new-quote" onClick={newQuote}>New Quote</button>
         </div>
-    </div>
+    </div>)}
     {/* <!-- Loader --> */}
     {/* <div className="loader" id="loader"></div> */}
     
